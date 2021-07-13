@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Data.Entites;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,6 +15,9 @@ namespace eShopSolution.Data.Configurations
         {
             builder.ToTable("AppRoles").HasKey(x=>x.Id);
             builder.Property(x => x.Description).HasMaxLength(200).IsRequired();
+
+            builder.HasMany<IdentityRoleClaim<Guid>>().WithOne().HasForeignKey(x => x.RoleId).IsRequired();
+            builder.HasMany<IdentityUserRole<Guid>>().WithOne().HasForeignKey(x => x.RoleId).IsRequired();
         }
     }
 }
